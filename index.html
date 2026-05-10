@@ -3,233 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hurricane Sandy Analysis - Group 3</title>
+    <title>Hurricane Sandy Event Analysis - Group 3</title>
     <style>
         :root {
-            --header-bg: #5D1725; /* MSU Maroon */
-            --section-bg: darkslateblue;
-            --bg-color: #f4f4f9;
-            --text-color: #333;
-            --card-bg: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #050a1b 0%, #1a2a4e 100%); /* Deep Navy Gradient */
+            --primary-accent: #6c7da7; /* Slate Blue Accent */
+            --secondary-accent: #a3b1c6; /* Lighter Blue Accent */
+            --text-primary: #e0e6ed; /* Light Text */
+            --text-secondary: #a0aec0; /* Subtler Text */
+            --glass-bg: rgba(255, 255, 255, 0.05); /* Very Transparent White for Glass */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border for glass */
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.37); /* Deep Shadow for Glass */
+            --card-radius: 12px;
+            --heading-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --body-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: var(--body-font);
+            background: var(--bg-gradient);
+            color: var(--text-primary);
             margin: 0;
             padding: 0;
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
+
+        /* Hero Header */
         header {
-            background-color: var(--header-bg);
-            color: white;
+            background: rgba(26, 42, 78, 0.4); /* Slightly transparent dark navy */
+            backdrop-filter: blur(15px);
+            border-bottom: var(--glass-border);
+            color: var(--text-primary);
             text-align: center;
-            padding: 40px 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 60px 20px;
+            box-shadow: var(--glass-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+
         header h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5em;
+            font-family: var(--heading-font);
+            margin: 0 0 15px 0;
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #fff;
         }
+
         header p {
             margin: 0;
-            font-size: 1.2em;
+            font-size: 1.4em;
             opacity: 0.9;
+            color: var(--secondary-accent);
         }
+
         .authors {
             font-weight: bold;
-            margin-top: 15px;
-            font-size: 1.1em;
-            color: #e0e0e0;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--primary-accent);
         }
+
+        /* Main Content Container */
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px; /* Space between cards */
         }
-        .section-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 40px;
+
+        /* Glass Card Styling */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: var(--card-radius);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
             overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        .section-header {
-            background-color: var(--section-bg);
-            color: white;
-            padding: 15px 25px;
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        .card-header {
+            background-color: rgba(108, 125, 167, 0.3); /* Transparent slate blue for header */
+            backdrop-filter: blur(5px);
+            color: #fff;
+            padding: 20px 30px;
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.8em;
+            font-family: var(--heading-font);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
-        .section-content {
-            padding: 25px;
+
+        .card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
         }
-        
-        /* Grid Layout for Text vs Gallery */
-        .content-grid {
+
+        /* Content Layouts within cards */
+        .content-layout {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 30px;
         }
-        @media(min-width: 900px) {
-            .content-grid {
-                grid-template-columns: 1fr 2.5fr;
+
+        @media(min-width: 1000px) {
+            .content-layout {
+                grid-template-columns: 1fr 2.5fr; /* Text side, visual side */
                 align-items: start;
             }
         }
-        
-        /* Image Gallery Grids */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        
-        /* Soundings specific grid */
-        .soundings-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+
+        /* Text styling */
+        .text-content {
+            color: var(--text-secondary);
         }
 
-        ul {
+        .text-content ul {
             padding-left: 20px;
+            margin: 0;
         }
-        li {
-            margin-bottom: 12px;
+
+        .text-content li {
+            margin-bottom: 15px;
         }
-        img {
+
+        .text-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Typography accents */
+        h2, h3 {
+            font-family: var(--heading-font);
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--primary-accent);
+            margin-bottom: 10px;
+        }
+
+        /* Image and GIF containers */
+        .visual-display {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .media-placeholder {
+            background: rgba(255, 255, 255, 0.03);
+            border: var(--glass-border);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Grids for images/GIFs */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .soundings-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Visual styling */
+        img, .media-placeholder img {
             width: 100%;
+            height: auto;
             border-radius: 6px;
-            border: 1px solid #ddd;
-            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
         img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: scale(1.03);
+            box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
         }
+
+        /* Specific styles for single items like GIFs or Meteogram */
+        .single-visual {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            border-top: var(--glass-border);
+            margin-top: 80px;
+        }
+
+        /* Add placeholders/instructions within content */
+        .placeholder-note {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--primary-accent);
+            padding: 15px;
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+
     </style>
 </head>
 <body>
 
     <header>
         <h1>Hurricane Sandy Weather Event Analysis</h1>
-        <p>A Synoptic Overview using Matplotlib and Cartopy</p>
+        <p>A Synoptic & Mesoscale Overview using Matplotlib and Cartopy</p>
         <p class="authors">Group 3: Noelle Davis, Matthew Lentz, Gabe Slade</p>
     </header>
 
     <div class="container">
 
-        <div class="section-card">
-            <h2 class="section-header">The Event (Oct 22 - Nov 1, 2012)</h2>
-            <div class="section-content">
+        <div class="glass-card">
+            <h2 class="card-header">The Event: Hurricane Sandy (Oct 22 - Nov 1, 2012)</h2>
+            <div class="card-content text-content">
+                <p>This dashboard provides a comprehensive meteorological analysis of the devastating Hurricane Sandy, chronicling its formation, unprecedented path, and complex transition into a powerful extratropical storm before US landfall.</p>
                 <ul>
-                    <li><strong>October 22, 2012:</strong> Sandy formed in the central Caribbean Sea.</li>
-                    <li><strong>Progression:</strong> It intensified into a hurricane while moving north across Jamaica, eastern Cuba, and the Bahamas.</li>
-                    <li><strong>October 28-29, 2012:</strong> After moving northeast parallel to the U.S. East Coast, the storm took an unusual westward turn toward the Mid-Atlantic.</li>
-                    <li><strong>Landfall:</strong> Made landfall near Atlantic City, NJ, on the evening of October 29, 2012, transitioning into a midlatitude cyclone soon thereafter.</li>
+                    <li><strong>October 22, 2012:</strong> Sandy forms as a tropical depression in the central Caribbean Sea.</li>
+                    <li><strong>October 24-25:</strong> Rapidly intensifies, becoming a Category 3 hurricane as it traverses Jamaica, eastern Cuba, and the Bahamas.</li>
+                    <li><strong>October 26-28:</strong> Sandy travels north-northeast, paralleling the US East Coast. Interacts with an upper-level trough, fueling its unique structure.</li>
+                    <li><strong>October 28-29:</strong> Instead of continuing out to sea, the storm takes an anomalous, sharp westward turn towards the Mid-Atlantic.</li>
+                    <li><strong>Landfall (Oct 29):</strong> Makes landfall near Atlantic City, NJ, in the evening as a post-tropical cyclone, having transitioned into a vast midlatitude low pressure system.</li>
                 </ul>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="section-header">Mean Sea Level Pressure & Winds</h2>
-            <div class="section-content content-grid">
-                <div>
+        <div class="glass-card">
+            <h2 class="card-header">Mean Sea Level Pressure & Winds Analysis</h2>
+            <div class="card-content content-layout">
+                <div class="text-content">
+                    <h3>Key Observations:</h3>
                     <ul>
-                        <li>Isotach shading and wind barbs.</li>
-                        <li>Max winds are generally less than 73 MPH due to poor model resolution of the GFS.</li>
-                        <li>GFS forecasted sub-950mb MSLP at landfall.</li>
+                        <li><strong>GIF:</strong> The animation vividly illustrates Sandy's pressure field evolution and the expansive wind field associated with the system.</li>
+                        <li><strong>Images:</strong> Static timesteps show the rapid pressure drop approaching landfall. GFS modeled MSLP below 950mb, though model resolution underestimated maximum sustained winds (keeping them largely below 73 MPH).</li>
+                        <li><strong>Winds:</strong> Counterclockwise flow is well-defined, with increasing intensities near the core, despite resolution limits.</li>
                     </ul>
                 </div>
-                <div class="image-gallery">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_000.png" alt="MSLP Hour 0">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_006.png" alt="MSLP Hour 6">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_012.png" alt="MSLP Hour 12">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_018.png" alt="MSLP Hour 18">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_024.png" alt="MSLP Hour 24">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_027.png" alt="MSLP Hour 27">
+                <div class="visual-display">
+                    <h3>Animation (GIF):</h3>
+                    <div class="single-visual">
+                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/MSLP%20&%20Winds%20GIF.gif" alt="MSLP and Winds Animation">
+                    </div>
+                    <h3>Timestep Snapshots (Images):</h3>
+                    <div class="media-grid">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_003.png" alt="MSLP H+3">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_006.png" alt="MSLP H+6">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_012.png" alt="MSLP H+12">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_018.png" alt="MSLP H+18">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_024.png" alt="MSLP H+24">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_027.png" alt="MSLP H+27">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="section-header">Geopotential Heights & Moisture</h2>
-            <div class="section-content content-grid">
-                <div>
+        <div class="glass-card">
+            <h2 class="card-header">Geopotential Heights & Moisture Dynamics</h2>
+            <div class="card-content content-layout">
+                <div class="text-content">
+                    <h3>Atmospheric Structure:</h3>
                     <ul>
-                        <li>Fujiwhara-style effect with an upper-level trough.</li>
-                        <li>Contributions to extratropical features.</li>
-                        <li>The 540 height line is where snowfall can occur!</li>
+                        <li><strong>GIF:</strong> Shows the dynamic interaction between Sandy and an approaching upper-level trough, demonstrating the extratropical transition in real-time.</li>
+                        <li><strong>Images:</strong> Observe the deep upper-level low interacting with the massive moisture plume, depicting the "Fujiwhara-style" effect crucial to the westward turn and immense storm size.</li>
+                        <li><strong>Moisture & Heights:</strong> The moisture distribution shows immense scale, fueling torrential rain. Note the position of the 540dam line, indicative of possible winter weather.</li>
                     </ul>
                 </div>
-                <div class="image-gallery">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_003.png" alt="Geopotential Hour 3">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_012.png" alt="Geopotential Hour 12">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_018.png" alt="Geopotential Hour 18">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_027.png" alt="Geopotential Hour 27">
+                <div class="visual-display">
+                    <h3>Animation (GIF):</h3>
+                    <div class="single-visual">
+                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Sandy%20GH%20&%20Moisture.gif" alt="Geopotential Height and Moisture Animation">
+                    </div>
+                    <h3>Height & Moisture Timesteps (Images):</h3>
+                    <div class="media-grid">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_003.png" alt="Geopotential H+3">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_012.png" alt="Geopotential H+12">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_018.png" alt="Geopotential H+18">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_027.png" alt="Geopotential H+27">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="section-header">Radar Reflectivity</h2>
-            <div class="section-content content-grid">
-                <div>
+        <div class="glass-card">
+            <h2 class="card-header">Radar Reflectivity & Precipitation Structure</h2>
+            <div class="card-content content-layout">
+                <div class="text-content">
+                    <h3>Radar Perspective:</h3>
                     <ul>
-                        <li>Flooding rainfall potential.</li>
-                        <li>Lack of visible "eye".</li>
-                        <li>Nice counterclockwise spin!</li>
+                        <li><strong>GIF:</strong> Animates the radar evolution, highlighting the massive rain shield, strong convection, and distinct asymmetric structure, characteristic of the storm's transformation and immense precipitation potential.</li>
+                        <li><strong>Images:</strong> Timesteps from 06z (Oct 29) to 05z (Oct 30) capture the core approaching and moving inland. Note the counterclockwise spin and the lack of a traditional eye, emphasizing the broad, extratropical nature. Immense rainfall potential is evident.</li>
                     </ul>
                 </div>
-                <div class="image-gallery">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_060303.png" alt="Radar Oct 29 06z">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_120246.png" alt="Radar Oct 29 12z">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_175907.png" alt="Radar Oct 29 17z">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_210138.png" alt="Radar Oct 29 21z">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_030148.png" alt="Radar Oct 30 03z">
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_055815.png" alt="Radar Oct 30 05z">
+                <div class="visual-display">
+                    <h3>Animation (GIF):</h3>
+                    <div class="single-visual">
+                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Radar%20Reflectivity%20GIF.gif" alt="Radar Reflectivity Animation">
+                    </div>
+                    <h3>Key Radar Moments (Images):</h3>
+                    <div class="media-grid">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_060303.png" alt="Radar Oct 29 06z">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_120246.png" alt="Radar Oct 29 12z">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_175907.png" alt="Radar Oct 29 17z">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_210138.png" alt="Radar Oct 29 21z">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_030148.png" alt="Radar Oct 30 03z">
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_055815.png" alt="Radar Oct 30 05z">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="section-header">Soundings (KOKX - Brookhaven, NY)</h2>
-            <div class="section-content">
-                <p>Vertical profile analysis captured the environment prior to, during, and after landfall:</p>
+        <div class="glass-card">
+            <h2 class="card-header">Vertical Analysis: Soundings (KOKX - Brookhaven, NY)</h2>
+            <div class="card-content text-content">
+                <p>Detailed vertical profile soundings provide crucial insights into the evolving atmospheric state at KOKX (Brookhaven, NY) across landfall.</p>
                 <div class="soundings-gallery">
                     <div>
-                        <strong>October 29, 12z:</strong> Environment 12 hours prior to landfall.
+                        <h3>Pre-Landfall (Oct 29, 12z)</h3>
                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct29_12z_sounding.png" alt="Sounding Oct 29 12z">
+                        <p class="authors">Environment 12 hours prior to landfall.</p>
                     </div>
                     <div>
-                        <strong>October 30, 00z:</strong> Environment around the time of landfall.
+                        <h3>Around Landfall (Oct 30, 00z)</h3>
                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct30_0z_sounding.png" alt="Sounding Oct 30 00z">
+                        <p class="authors">Environment around the time of landfall.</p>
                     </div>
                     <div>
-                        <strong>October 30, 12z:</strong> Environment 12 hours following landfall.
+                        <h3>Post-Landfall (Oct 30, 12z)</h3>
                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct30_12z_sounding.png" alt="Sounding Oct 30 12z">
+                        <p class="authors">Environment 12 hours following landfall.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="section-card">
-            <h2 class="section-header">Atlantic City, NJ Buoy Data Meteogram</h2>
-            <div class="section-content content-grid">
-                <div>
+        <div class="glass-card">
+            <h2 class="card-header">Atlantic City, NJ Buoy Data Meteogram</h2>
+            <div class="card-content content-layout">
+                <div class="text-content">
+                    <h3>Surface Observations:</h3>
                     <ul>
-                        <li>Notice the pressure drop!</li>
-                        <li>Temperature drop after landfall!</li>
+                        <li><strong>Meteogram:</strong> Tracks critical surface parameters leading up to and through landfall.</li>
+                        <li><strong>Pressure:</strong> Look for the dramatic and steep pressure drop, a signature of the powerful low system.</li>
+                        <li><strong>Temperature:</strong> Observe the temperature drop following landfall, consistent with the storm's extratropical transition and colder air intrusion.</li>
                     </ul>
                 </div>
-                <div>
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Buoy%20Station%20ACYN4%20Meteogram.png" alt="Atlantic City Buoy Meteogram">
+                <div class="visual-display">
+                    <h3>Atlantic City Buoy Station ACYN4:</h3>
+                    <div class="single-visual">
+                         <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Buoy%20Station%20ACYN4%20Meteogram.png" alt="Atlantic City Buoy Meteogram">
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <footer>
+        <p>&copy; 2023 - Hurricane Sandy Analysis | Noelle Davis, Matthew Lentz, Gabe Slade</p>
+        <p>A meteorological dashboard built for scientific understanding.</p>
+    </footer>
+
 </body>
 </html>
