@@ -6,7 +6,7 @@
     <title>Hurricane Sandy Analysis - Group 3</title>
     <style>
         :root {
-            --header-bg: #5D1725; /* Deep Maroon */
+            --header-bg: #5D1725; /* MSU Maroon */
             --section-bg: darkslateblue;
             --bg-color: #f4f4f9;
             --text-color: #333;
@@ -43,7 +43,7 @@
             color: #e0e0e0;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -64,18 +64,35 @@
         .section-content {
             padding: 25px;
         }
-        .grid-layout {
+        
+        /* Grid Layout for Text vs Gallery */
+        .content-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
         }
-        /* Make text and images sit side-by-side on larger screens */
-        @media(min-width: 768px) {
-            .grid-layout {
-                grid-template-columns: 1fr 1.5fr;
-                align-items: center;
+        @media(min-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr 2.5fr;
+                align-items: start;
             }
         }
+        
+        /* Image Gallery Grids */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        /* Soundings specific grid */
+        .soundings-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
         ul {
             padding-left: 20px;
         }
@@ -86,6 +103,11 @@
             width: 100%;
             border-radius: 6px;
             border: 1px solid #ddd;
+            transition: transform 0.2s;
+        }
+        img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
     </style>
 </head>
@@ -113,7 +135,7 @@
 
         <div class="section-card">
             <h2 class="section-header">Mean Sea Level Pressure & Winds</h2>
-            <div class="section-content grid-layout">
+            <div class="section-content content-grid">
                 <div>
                     <ul>
                         <li>Isotach shading and wind barbs.</li>
@@ -121,15 +143,20 @@
                         <li>GFS forecasted sub-950mb MSLP at landfall.</li>
                     </ul>
                 </div>
-                <div>
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/MSLP%20&%20Winds%20GIF.gif" alt="MSLP and Winds Animation">
+                <div class="image-gallery">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_000.png" alt="MSLP Hour 0">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_006.png" alt="MSLP Hour 6">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_012.png" alt="MSLP Hour 12">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_018.png" alt="MSLP Hour 18">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_024.png" alt="MSLP Hour 24">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/mslp_winds_0600_027.png" alt="MSLP Hour 27">
                 </div>
             </div>
         </div>
 
         <div class="section-card">
             <h2 class="section-header">Geopotential Heights & Moisture</h2>
-            <div class="section-content grid-layout">
+            <div class="section-content content-grid">
                 <div>
                     <ul>
                         <li>Fujiwhara-style effect with an upper-level trough.</li>
@@ -137,15 +164,18 @@
                         <li>The 540 height line is where snowfall can occur!</li>
                     </ul>
                 </div>
-                <div>
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Sandy%20GH%20&%20Moisture.gif" alt="Geopotential Height Animation">
+                <div class="image-gallery">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_003.png" alt="Geopotential Hour 3">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_012.png" alt="Geopotential Hour 12">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_018.png" alt="Geopotential Hour 18">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_027.png" alt="Geopotential Hour 27">
                 </div>
             </div>
         </div>
 
         <div class="section-card">
             <h2 class="section-header">Radar Reflectivity</h2>
-            <div class="section-content grid-layout">
+            <div class="section-content content-grid">
                 <div>
                     <ul>
                         <li>Flooding rainfall potential.</li>
@@ -153,8 +183,13 @@
                         <li>Nice counterclockwise spin!</li>
                     </ul>
                 </div>
-                <div>
-                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Radar%20Reflectivity%20GIF.gif" alt="Radar Reflectivity Animation">
+                <div class="image-gallery">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_060303.png" alt="Radar Oct 29 06z">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_120246.png" alt="Radar Oct 29 12z">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_175907.png" alt="Radar Oct 29 17z">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1029_210138.png" alt="Radar Oct 29 21z">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_030148.png" alt="Radar Oct 30 03z">
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Radar_1030_055815.png" alt="Radar Oct 30 05z">
                 </div>
             </div>
         </div>
@@ -163,23 +198,35 @@
             <h2 class="section-header">Soundings (KOKX - Brookhaven, NY)</h2>
             <div class="section-content">
                 <p>Vertical profile analysis captured the environment prior to, during, and after landfall:</p>
-                <ul>
-                    <li><strong>October 29, 12z:</strong> Environment 12 hours prior to landfall.</li>
-                    <li><strong>October 30, 00z:</strong> Environment around the time of landfall.</li>
-                    <li><strong>October 30, 12z:</strong> Environment 12 hours following landfall.</li>
-                </ul>
-                <p><em>Note: If you have your SounderPy images in your repository folder, you can embed them here!</em></p>
+                <div class="soundings-gallery">
+                    <div>
+                        <strong>October 29, 12z:</strong> Environment 12 hours prior to landfall.
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct29_12z_sounding.png" alt="Sounding Oct 29 12z">
+                    </div>
+                    <div>
+                        <strong>October 30, 00z:</strong> Environment around the time of landfall.
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct30_0z_sounding.png" alt="Sounding Oct 30 00z">
+                    </div>
+                    <div>
+                        <strong>October 30, 12z:</strong> Environment 12 hours following landfall.
+                        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/okx_oct30_12z_sounding.png" alt="Sounding Oct 30 12z">
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="section-card">
             <h2 class="section-header">Atlantic City, NJ Buoy Data Meteogram</h2>
-            <div class="section-content">
-                <ul>
-                    <li>Notice the pressure drop!</li>
-                    <li>Temperature drop after landfall!</li>
-                </ul>
-                <p><em>Note: If you have your meteogram image in your repository folder, you can embed it here!</em></p>
+            <div class="section-content content-grid">
+                <div>
+                    <ul>
+                        <li>Notice the pressure drop!</li>
+                        <li>Temperature drop after landfall!</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/Buoy%20Station%20ACYN4%20Meteogram.png" alt="Atlantic City Buoy Meteogram">
+                </div>
             </div>
         </div>
 
