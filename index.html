@@ -3,63 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hurricane Sandy Analysis</title>
+    <title>Hurricane Sandy Analysis - Group 3</title>
     <style>
+        :root {
+            --header-bg: #5D1725; /* Deep Maroon */
+            --section-bg: darkslateblue;
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: var(--header-bg);
+            color: white;
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #5D1725; /* MSU Maroon */
-            margin-bottom: 5px;
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
         }
-        p.subtitle {
-            color: #666;
-            margin-bottom: 40px;
+        header p {
+            margin: 0;
+            font-size: 1.2em;
+            opacity: 0.9;
         }
-        h2 {
-            color: darkslateblue;
-            margin-top: 10px;
+        .authors {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #e0e0e0;
         }
-        .gif-container {
-            margin: 20px auto;
-            max-width: 900px;
-            background: white;
-            padding: 20px;
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .section-card {
+            background: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .section-header {
+            background-color: var(--section-bg);
+            color: white;
+            padding: 15px 25px;
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .section-content {
+            padding: 25px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        /* Make text and images sit side-by-side on larger screens */
+        @media(min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: 1fr 1.5fr;
+                align-items: center;
+            }
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 12px;
         }
         img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
 
-    <h1>Hurricane Sandy (2012) - Meteorological Analysis</h1>
-    <p class="subtitle">A synoptic overview using Matplotlib and Cartopy.</p>
+    <header>
+        <h1>Hurricane Sandy Weather Event Analysis</h1>
+        <p>A Synoptic Overview using Matplotlib and Cartopy</p>
+        <p class="authors">Group 3: Noelle Davis, Matthew Lentz, Gabe Slade</p>
+    </header>
 
-    <div class="gif-container">
-        <h2>Mean Sea Level Pressure & Winds</h2>
-        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/MSLP%20&%20Winds%20GIF.gif" alt="MSLP and Winds Animation">
+    <div class="container">
+
+        <div class="section-card">
+            <h2 class="section-header">The Event (Oct 22 - Nov 1, 2012)</h2>
+            <div class="section-content">
+                <ul>
+                    <li><strong>October 22, 2012:</strong> Sandy formed in the central Caribbean Sea.</li>
+                    <li><strong>Progression:</strong> It intensified into a hurricane while moving north across Jamaica, eastern Cuba, and the Bahamas.</li>
+                    <li><strong>October 28-29, 2012:</strong> After moving northeast parallel to the U.S. East Coast, the storm took an unusual westward turn toward the Mid-Atlantic.</li>
+                    <li><strong>Landfall:</strong> Made landfall near Atlantic City, NJ, on the evening of October 29, 2012, transitioning into a midlatitude cyclone soon thereafter.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-header">Mean Sea Level Pressure & Winds</h2>
+            <div class="section-content grid-layout">
+                <div>
+                    <ul>
+                        <li>Isotach shading and wind barbs.</li>
+                        <li>Max winds are generally less than 73 MPH due to poor model resolution of the GFS.</li>
+                        <li>GFS forecasted sub-950mb MSLP at landfall.</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/MSLP%20&%20Winds%20GIF.gif" alt="MSLP and Winds Animation">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-header">Geopotential Heights & Moisture</h2>
+            <div class="section-content grid-layout">
+                <div>
+                    <ul>
+                        <li>Fujiwhara-style effect with an upper-level trough.</li>
+                        <li>Contributions to extratropical features.</li>
+                        <li>The 540 height line is where snowfall can occur!</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Sandy%20GH%20&%20Moisture.gif" alt="Geopotential Height Animation">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-header">Radar Reflectivity</h2>
+            <div class="section-content grid-layout">
+                <div>
+                    <ul>
+                        <li>Flooding rainfall potential.</li>
+                        <li>Lack of visible "eye".</li>
+                        <li>Nice counterclockwise spin!</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Radar%20Reflectivity%20GIF.gif" alt="Radar Reflectivity Animation">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-header">Soundings (KOKX - Brookhaven, NY)</h2>
+            <div class="section-content">
+                <p>Vertical profile analysis captured the environment prior to, during, and after landfall:</p>
+                <ul>
+                    <li><strong>October 29, 12z:</strong> Environment 12 hours prior to landfall.</li>
+                    <li><strong>October 30, 00z:</strong> Environment around the time of landfall.</li>
+                    <li><strong>October 30, 12z:</strong> Environment 12 hours following landfall.</li>
+                </ul>
+                <p><em>Note: If you have your SounderPy images in your repository folder, you can embed them here!</em></p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-header">Atlantic City, NJ Buoy Data Meteogram</h2>
+            <div class="section-content">
+                <ul>
+                    <li>Notice the pressure drop!</li>
+                    <li>Temperature drop after landfall!</li>
+                </ul>
+                <p><em>Note: If you have your meteogram image in your repository folder, you can embed it here!</em></p>
+            </div>
+        </div>
+
     </div>
-
-    <div class="gif-container">
-        <h2>Radar Reflectivity</h2>
-        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Radar%20Reflectivity%20GIF.gif" alt="Radar Reflectivity Animation">
-    </div>
-
-    <div class="gif-container">
-        <h2>Geopotential Height & Moisture</h2>
-        <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/GIFs/Sandy%20GH%20&%20Moisture.gif" alt="Geopotential Height Animation">
-    </div>
-
 </body>
 </html>
