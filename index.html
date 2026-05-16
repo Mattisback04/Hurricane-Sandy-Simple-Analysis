@@ -88,6 +88,7 @@
       width: 100%;
       height: auto;
       display: block;
+      cursor: zoom-in;
       border-radius: 6px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -101,7 +102,7 @@
 
     /* =========================
        Header
-       This is no longer sticky.
+       Not sticky — scrolls away normally
     ========================= */
     header {
       padding: 60px 20px;
@@ -216,6 +217,53 @@
     }
 
     /* =========================
+       Image Zoom Modal
+    ========================= */
+    .image-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.88);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-modal.active {
+      display: flex;
+    }
+
+    .image-modal img {
+      max-width: 95%;
+      max-height: 90vh;
+      object-fit: contain;
+      cursor: default;
+      border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+      transform: none;
+    }
+
+    .image-modal img:hover {
+      transform: none;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      color: white;
+      font-size: 2.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .close-modal:hover {
+      color: var(--accent-light);
+    }
+
+    /* =========================
        Footer
     ========================= */
     footer {
@@ -319,8 +367,10 @@
           <h3>Height &amp; Moisture Timesteps:</h3>
           <div class="image-grid">
             <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_003.png" alt="Geopotential H+3">
+            <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_006.png" alt="Geopotential H+6">
             <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_012.png" alt="Geopotential H+12">
             <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_018.png" alt="Geopotential H+18">
+            <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_024.png" alt="Geopotential H+24">
             <img src="Hurricane%20Sandy%20Analysis:%20Images%20and%20GIFs/Images/GeopotentialGFS_0600_027.png" alt="Geopotential H+27">
           </div>
         </div>
@@ -421,5 +471,44 @@
     <p>&copy; 2026 - Hurricane Sandy Analysis | Noelle Davis, Matthew Lentz, Gabe Slade</p>
     <p>A meteorological dashboard built for scientific understanding.</p>
   </footer>
+
+  <!-- Image Zoom Modal -->
+  <div class="image-modal" id="imageModal">
+    <span class="close-modal" id="closeModal">&times;</span>
+    <img id="modalImage" src="" alt="Expanded view">
+  </div>
+
+  <script>
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeModal = document.getElementById("closeModal");
+
+    document.querySelectorAll("main img").forEach((image) => {
+      image.addEventListener("click", () => {
+        modal.classList.add("active");
+        modalImage.src = image.src;
+        modalImage.alt = image.alt;
+      });
+    });
+
+    closeModal.addEventListener("click", () => {
+      modal.classList.remove("active");
+      modalImage.src = "";
+    });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.remove("active");
+        modalImage.src = "";
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        modal.classList.remove("active");
+        modalImage.src = "";
+      }
+    });
+  </script>
 </body>
 </html>
