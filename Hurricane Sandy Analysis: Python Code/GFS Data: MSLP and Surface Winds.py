@@ -84,7 +84,16 @@ cbar.set_label('MPH')
 plt.barbs(lons[::5,::5],lats[::5,::5],uKNOT[::5,::5],vKNOT[::5,::5],transform=ccrs.PlateCarree())
 
 
-plt.title('Mean Sea Level Pressure & Winds') 
+# Extract the analysis (run) time and valid forecast time directly from the PyGrib message
+run_time = sfcMSLPMSG.analDate.strftime('%Y-%m-%d %H:%M UTC')
+valid_time = sfcMSLPMSG.validDate.strftime('%Y-%m-%d %H:%M UTC')
+
+# The main bold header
+plt.suptitle('Mean Sea Level Pressure & Winds', fontweight='bold', fontsize=13, color='black', y=0.95)
+
+# The normal weight subtitle
+plt.title(f'GFS Model Run: {run_time} | Valid: {valid_time}', fontsize=11, color='black')
+
 
 # Replace the "save figure" naming convention after mslp_winds_ to reflect the naming convention of your choice. 
 plt.savefig('mslp_winds_0600_027')
