@@ -90,6 +90,14 @@ cbar = plt.colorbar(rhFILL, orientation='horizontal')
 cbar.set_label('Relative Humidity (%)')
 cbar.ax.xaxis.set_label_position('top')
 
-plt.title('500mb Heights (dm) / Humidity (%)')
+# Extract the analysis (run) time and valid forecast time directly from the PyGrib message
+run_time = sfcMSLPMSG.analDate.strftime('%Y-%m-%d %H:%M UTC')
+valid_time = sfcMSLPMSG.validDate.strftime('%Y-%m-%d %H:%M UTC')
+
+# The main bold header
+plt.suptitle('500mb Heights (dm) / Humidity (%)', fontweight='bold', fontsize=13, color='black', y=0.95)
+
+# The normal weight subtitle
+plt.title(f'GFS Model Run: {run_time} | Valid: {valid_time}', fontsize=11, color='black')
 
 plt.show()
